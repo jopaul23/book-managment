@@ -15,9 +15,7 @@ try:
     print("db connection successful")
 except Exception as e:
     print("error occured while connecting to db")
-@app.route("/",methods=["GET"])
-def home():
-    return "Book Management App"
+
 
 ##user
 
@@ -44,6 +42,24 @@ def get_books():
         print(e)
         return "Unexpected Errors",500
 
+@app.route("/fee/insert",methods=["POST"])
+def insert_fee():
+    try:
+        con = mysql.connection
+        cursor =  con.cursor()
+        req = request.json
+        starting = int(req["starting"])
+        ending = int(req["ending"])
+        fee = int(req["fee"])
+        values = 'INSERT INTO fee(starting,ending,fee) VALUES(%s,%s,%s)'
+        cursor.execute(values, (starting,ending,fee))
+        con.commit()
+        return "Successfully Inserted",200
+    except Exception as e:
+        print("error occured while inserting fee")
+        print(e)
+        return "Unexpected Error",e
+
 @app.route("/fee/get",methods=["GET","POST"])
 def get_fee():
     try:
@@ -51,10 +67,17 @@ def get_fee():
         cursor.execute('''SELECT * FROM fee''')
         result = cursor.fetchall()
         print("result ",result)
-        return "success"
+        result_list =[]
+        for res in result:
+            result_list.append({
+                "starting":res[0],
+                "ending":res[1],
+                "fee":res[2]
+            })
+        return json.dumps(result_list),200
     except Exception as e:
         print(e)
-        return "error"
+        return "Unexpected Error",500
 
 
 ##acconut
@@ -84,11 +107,12 @@ def create_admin():
         print(e)
         return "Error"
 
-@app.route("/api/admin/login",methods=["GET","POST"])
+@app.route("/api/admin/login",methods=["POST"])
 def admin_signin():
     try:
         cursor = mysql.connection.cursor()
         req = request.json
+        print(req)
         email = str(req["email"]).replace("OR","")
         password = str(req["password"]).replace("OR","")
         
