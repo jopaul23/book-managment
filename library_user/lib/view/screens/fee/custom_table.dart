@@ -41,7 +41,7 @@ class TableCustom extends StatelessWidget {
                       color: primaryBlue.withOpacity(0.05),
                       alignment: Alignment.center,
                       child: const Text(
-                        "From",
+                        "From(days)",
                         style: TextStyle(
                             color: primaryBlue,
                             fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class TableCustom extends StatelessWidget {
                       alignment: Alignment.center,
                       color: primaryBlue.withOpacity(0.05),
                       child: const Text(
-                        "To",
+                        "To(days)",
                         style: TextStyle(
                             color: primaryBlue,
                             fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class TableCustom extends StatelessWidget {
                       height: 60,
                       color: primaryBlue.withOpacity(0.05),
                       child: const Text(
-                        "Fee",
+                        "Fee(Rs)",
                         style: TextStyle(
                             color: primaryBlue,
                             fontWeight: FontWeight.bold,

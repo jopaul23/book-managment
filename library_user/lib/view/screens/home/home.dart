@@ -22,6 +22,7 @@ class _HomeState extends State<Home> {
   FeeController feeController = Get.put(FeeController());
   @override
   Widget build(BuildContext context) {
+    feeController.getAllFees();
     bookController.getAllBooks();
     return SafeArea(
       child: Scaffold(
